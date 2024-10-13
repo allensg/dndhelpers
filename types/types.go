@@ -9,13 +9,14 @@ import (
 type TableType string
 
 const (
-	D2  = 2
-	D4  = 4
-	D6  = 6
-	D8  = 8
-	D10 = 10
-	D12 = 12
-	D20 = 20
+	D2   = 2
+	D4   = 4
+	D6   = 6
+	D8   = 8
+	D10  = 10
+	D12  = 12
+	D20  = 20
+	D100 = 100
 	// table types
 	TableGoldValue  TableType = "TableGoldValue"  // gp value of item
 	TableValueLink  TableType = "TableValueLink"  // hyperlink to an item
@@ -82,50 +83,21 @@ type WyrmlingArtTable struct {
 	T Table
 }
 
-func NewWyrmlingArtTable() *WyrmlingArtTable {
-	content := NewArtTableRows()
-
-	bounds := []Bounds{
-		{Lower: 1, Upper: 95},
-		{Lower: 96, Upper: 100},
-	}
-
-	wyrmlingArtTable := &WyrmlingArtTable{
-		T: Table{
-			Name:    "Wyrmling Art Objects Table",
-			Bounds:  bounds,
-			Content: content,
-		},
-	}
-
-	return wyrmlingArtTable
-}
-
-func (wat *WyrmlingArtTable) HandleTableRolls(rolls Rolls) (*TableResults, error) {
-	tableResults := []*TableResult{}
-	for _, roll := range rolls.Components {
-		result, err := RollOnTable(wat.T, roll)
-		if err != nil {
-			return nil, errors.Join(err, errors.New("Failed to roll"))
-		}
-		tableResults = append(tableResults, result)
-	}
-	return &TableResults{
-		Results: tableResults,
-	}, nil
-}
-
 func RollOnTable(table Table, roll Roll) (*TableResult, error) {
 	result := &TableResult{
 		Type: table.Content.Type,
 	}
 
+	fmt.Println("inside roll on table")
+
 	sum := 0
-	for i := 0; i > roll.Count; i++ {
+	for i := 0; i < roll.Count; i++ {
 		rollResult := roll.Die.RollDie()
 		sum = sum + rollResult
 	}
 
+	fmt.Println("roll result")
+	fmt.Println(sum)
 	for boundIndex, bound := range table.Bounds {
 		if bound.InBounds(sum) {
 			switch table.Content.Type {
@@ -146,6 +118,7 @@ func RollOnTable(table Table, roll Roll) (*TableResult, error) {
 
 func (r *TableResults) PrintTableRolls() {
 	for _, result := range r.Results {
+		fmt.Println(result.Type)
 		switch result.Type {
 		case TableValueLink:
 			fmt.Println(result.Link)
@@ -168,4 +141,62 @@ func (b Bounds) InBounds(roll int) bool {
 
 func (d *Die) RollDie() int {
 	return rand.Intn(d.Size)
+}
+
+func NewWyrmlingArtTable() *WyrmlingArtTable {
+	content := NewArtTableRows()
+
+	bounds := []Bounds{
+		{Lower: 1, Upper: 95},
+		{Lower: 96, Upper: 100},
+	}
+
+	wyrmlingArtTable := &WyrmlingArtTable{
+		T: Table{
+			Name:    "Wyrmling Art Objects Table",
+			Bounds:  bounds,
+			Content: content,
+		},
+	}
+
+	return wyrmlingArtTable
+}
+
+func NewAncientDragonArtTable() *WyrmlingArtTable {
+	content := NewArtTableRows()
+
+	bounds := []Bounds{
+		{Lower: 1, Upper: 14},
+		{Lower: 15, Upper: 28},
+		{Lower: 29, Upper: 42},
+		{Lower: 43, Upper: 58},
+		{Lower: 59, Upper: 93},
+		{Lower: 94, Upper: 100},
+	}
+
+	wyrmlingArtTable := &WyrmlingArtTable{
+		T: Table{
+			Name:    "Wyrmling Art Objects Table",
+			Bounds:  bounds,
+			Content: content,
+		},
+	}
+
+	return wyrmlingArtTable
+}
+
+func (wat *WyrmlingArtTable) HandleTableRolls(rolls Rolls) (*TableResults, error) {
+	tableResults := []*TableResult{}
+	for _, roll := range rolls.Components {
+		fmt.Println("inside handle table rolls")
+		result, err := RollOnTable(wat.T, roll)
+		if err != nil {
+			return nil, errors.Join(err, errors.New("Failed to roll"))
+		}
+		fmt.Println()
+		tableResults = append(tableResults, result)
+	}
+	return &TableResults{
+		Results: tableResults,
+	}, nil
 }
