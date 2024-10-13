@@ -9,7 +9,7 @@ import (
 func main() {
 	fmt.Println("sup sluts")
 
-	wyrmlingTable := types.NewAncientDragonArtTable()
+	AncientArtTable := types.NewAncientDragonArtTable()
 	roll := types.Roll{
 		Die:   types.Die{Size: types.D100},
 		Count: 1,
@@ -20,7 +20,7 @@ func main() {
 		Components: rolls,
 	}
 
-	results, err := wyrmlingTable.HandleTableRolls(rollTypes)
+	results, err := types.HandleTableRolls(AncientArtTable, rollTypes)
 
 	if err != nil {
 		fmt.Println(err.Error())

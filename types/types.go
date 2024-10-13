@@ -79,11 +79,7 @@ func NewArtTableRows() TableRows {
 	return rows
 }
 
-type WyrmlingArtTable struct {
-	T Table
-}
-
-func RollOnTable(table Table, roll Roll) (*TableResult, error) {
+func RollOnTable(table *Table, roll Roll) (*TableResult, error) {
 	result := &TableResult{
 		Type: table.Content.Type,
 	}
@@ -143,7 +139,7 @@ func (d *Die) RollDie() int {
 	return rand.Intn(d.Size)
 }
 
-func NewWyrmlingArtTable() *WyrmlingArtTable {
+func NewWyrmlingArtTable() *Table {
 	content := NewArtTableRows()
 
 	bounds := []Bounds{
@@ -151,18 +147,16 @@ func NewWyrmlingArtTable() *WyrmlingArtTable {
 		{Lower: 96, Upper: 100},
 	}
 
-	wyrmlingArtTable := &WyrmlingArtTable{
-		T: Table{
-			Name:    "Wyrmling Art Objects Table",
-			Bounds:  bounds,
-			Content: content,
-		},
+	wyrmlingArtTable := &Table{
+		Name:    "Wyrmling Art Objects Table",
+		Bounds:  bounds,
+		Content: content,
 	}
 
 	return wyrmlingArtTable
 }
 
-func NewAncientDragonArtTable() *WyrmlingArtTable {
+func NewAncientDragonArtTable() *Table {
 	content := NewArtTableRows()
 
 	bounds := []Bounds{
@@ -174,22 +168,20 @@ func NewAncientDragonArtTable() *WyrmlingArtTable {
 		{Lower: 94, Upper: 100},
 	}
 
-	wyrmlingArtTable := &WyrmlingArtTable{
-		T: Table{
-			Name:    "Wyrmling Art Objects Table",
-			Bounds:  bounds,
-			Content: content,
-		},
+	wyrmlingArtTable := &Table{
+		Name:    "Wyrmling Art Objects Table",
+		Bounds:  bounds,
+		Content: content,
 	}
 
 	return wyrmlingArtTable
 }
 
-func (wat *WyrmlingArtTable) HandleTableRolls(rolls Rolls) (*TableResults, error) {
+func HandleTableRolls(table *Table, rolls Rolls) (*TableResults, error) {
 	tableResults := []*TableResult{}
 	for _, roll := range rolls.Components {
 		fmt.Println("inside handle table rolls")
-		result, err := RollOnTable(wat.T, roll)
+		result, err := RollOnTable(table, roll)
 		if err != nil {
 			return nil, errors.Join(err, errors.New("Failed to roll"))
 		}
