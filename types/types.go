@@ -139,44 +139,6 @@ func (d *Die) RollDie() int {
 	return rand.Intn(d.Size)
 }
 
-func NewWyrmlingArtTable() *Table {
-	content := NewArtTableRows()
-
-	bounds := []Bounds{
-		{Lower: 1, Upper: 95},
-		{Lower: 96, Upper: 100},
-	}
-
-	wyrmlingArtTable := &Table{
-		Name:    "Wyrmling Art Objects Table",
-		Bounds:  bounds,
-		Content: content,
-	}
-
-	return wyrmlingArtTable
-}
-
-func NewAncientDragonArtTable() *Table {
-	content := NewArtTableRows()
-
-	bounds := []Bounds{
-		{Lower: 1, Upper: 14},
-		{Lower: 15, Upper: 28},
-		{Lower: 29, Upper: 42},
-		{Lower: 43, Upper: 58},
-		{Lower: 59, Upper: 93},
-		{Lower: 94, Upper: 100},
-	}
-
-	wyrmlingArtTable := &Table{
-		Name:    "Wyrmling Art Objects Table",
-		Bounds:  bounds,
-		Content: content,
-	}
-
-	return wyrmlingArtTable
-}
-
 func HandleTableRolls(table *Table, rolls Rolls) (*TableResults, error) {
 	tableResults := []*TableResult{}
 	for _, roll := range rolls.Components {
