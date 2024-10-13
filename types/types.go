@@ -9,6 +9,13 @@ import (
 type TableType string
 
 const (
+	D2  = 2
+	D4  = 4
+	D6  = 6
+	D8  = 8
+	D10 = 10
+	D12 = 12
+	D20 = 20
 	// table types
 	TableGoldValue  TableType = "TableGoldValue"  // gp value of item
 	TableValueLink  TableType = "TableValueLink"  // hyperlink to an item
@@ -36,13 +43,13 @@ type Table struct { // ex
 }
 
 type TableRows struct {
-	Type          TableType
+	Type          TableType // gp, item links, table links
 	Links         []string
 	ItemValues    []string
 	LinkingTables []Table
 }
 
-type TableResult struct {
+type TableResult struct { // like table but for resultsd
 	Type         TableType
 	Link         string
 	ItemValue    string

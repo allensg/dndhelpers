@@ -10,8 +10,11 @@ func main() {
 	fmt.Println("sup sluts")
 
 	wyrmlingTable := types.NewWyrmlingArtTable()
-
-	rolls := []types.Roll{}
+	roll := types.Roll{
+		Die:   types.Die{Size: types.D10},
+		Count: 2,
+	}
+	rolls := []types.Roll{roll}
 
 	rollTypes := types.Rolls{
 		Components: rolls,
