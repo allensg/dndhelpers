@@ -8,13 +8,11 @@ func NewWyrmlingArtTable() *Table {
 		{Lower: 96, Upper: 100},
 	}
 
-	wyrmlingArtTable := &Table{
+	return &Table{
 		Name:    "Wyrmling Art Objects Table",
 		Bounds:  bounds,
 		Content: content,
 	}
-
-	return wyrmlingArtTable
 }
 
 func NewAncientDragonArtTable() *Table {
@@ -28,11 +26,10 @@ func NewAncientDragonArtTable() *Table {
 		{Lower: 94, Upper: 100},
 	}
 
-	wyrmlingArtTable := &Table{
-		Name:    "Wyrmling Art Objects Table",
+	return &Table{
+		Name:    "Ancient Dragon Art Objects Table",
 		Bounds:  bounds,
 		Content: content,
 	}
 
-	return wyrmlingArtTable
 }

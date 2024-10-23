@@ -7,6 +7,7 @@ import (
 )
 
 type TableType string
+type CrRange string
 
 const (
 	D2   = 2
@@ -21,6 +22,12 @@ const (
 	TableGoldValue  TableType = "TableGoldValue"  // gp value of item
 	TableValueLink  TableType = "TableValueLink"  // hyperlink to an item
 	TableOtherTable TableType = "TableOtherTable" // links to another table
+
+	// cr ranges
+	LowCR      CrRange = "Low"
+	MidCR      CrRange = "Mid"
+	HighCR     CrRange = "High"
+	VeryHighCR CrRange = "VeryHigh"
 )
 
 type Die struct {
@@ -74,6 +81,15 @@ func NewArtTableRows() TableRows {
 	rows := TableRows{
 		Type:       TableGoldValue,
 		ItemValues: []string{"25", "250", "750", "2500", "7500"},
+	}
+
+	return rows
+}
+
+func NewGemTableRows() TableRows {
+	rows := TableRows{
+		Type:       TableGoldValue,
+		ItemValues: []string{"10", "50", "100", "500", "1000", "5000"},
 	}
 
 	return rows
